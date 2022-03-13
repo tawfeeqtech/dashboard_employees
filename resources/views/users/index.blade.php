@@ -17,7 +17,22 @@
             @endif
             <div class="card mb-4 mx-auto">
                 <div class="card-header">
-                    <a href="{{route('users.create')}}" class="float-end">Create</a>
+                    <div class="row">
+                        <div class="col">
+                            <form action="{{route('users.index')}}" class="row align-items-center">
+                                <div class="col-sm-6">
+                                    <input type="text" name="search" class="form-control" id="autoSizingInput" placeholder="search by username or email">
+                                </div>
+
+                                <div class="col-auto">
+                                    <button type="submit" class="btn btn-outline-dark">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col">
+                            <a href="{{route('users.create')}}" class="btn btn-primary float-end">Create</a>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-body">
                     <table class="table table-bordered  table-hover">
@@ -38,13 +53,14 @@
                                 <td>
                                     <a href="{{route('users.edit',$user->id)}}" class="btn btn-success">Edit</a>
 
-                                    <form style="display: inline" method="POST" action="{{route('users.destroy',$user->id)}}">
+                                    <form style="display: inline" method="POST"
+                                          action="{{route('users.destroy',$user->id)}}">
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn btn-danger">Delete</button>
                                     </form>
 
-{{--                                    <a href="{{route('users.destroy',$user->id)}}" class="btn btn-danger">Delete</a>--}}
+                                    {{--                                    <a href="{{route('users.destroy',$user->id)}}" class="btn btn-danger">Delete</a>--}}
                                 </td>
                             </tr>
                         @endforeach

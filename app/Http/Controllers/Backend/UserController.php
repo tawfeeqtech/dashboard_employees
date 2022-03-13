@@ -6,21 +6,26 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UserStoreRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Models\User;
+
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
+     * @param    $request
      * @return Factory|View
      */
-    public function index()
+    public function index(Request $request)
     {
         $users = User::all();
+        if ($request->has('search')){
+            $users = User::where('username','like',"%{$request->search}%")->orWhere('email','like',"%{$request->search}%")->get();
+        }
         return view('users.index', compact('users'));
     }
 
