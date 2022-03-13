@@ -7,7 +7,7 @@
     <meta name="description" content=""/>
     <meta name="author" content=""/>
     <title>Dashboard</title>
-    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet"/>
+{{--    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet"/>--}}
     <link href="{{asset('css/styles.css')}}" rel="stylesheet"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"
             crossorigin="anonymous"></script>
@@ -80,7 +80,7 @@
                     <div class="collapse" id="collapseUser" aria-labelledby="headingOne"
                          data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="layout-static.html">User</a>
+                            <a class="nav-link" href="{{route('users.index')}}">User</a>
                             <a class="nav-link" href="layout-sidenav-light.html">Role</a>
                             <a class="nav-link" href="layout-sidenav-light.html">Permission</a>
                         </nav>
@@ -98,12 +98,7 @@
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid px-4">
-                <h1 class="mt-4">Dashboard</h1>
-
-                <div class="row">
                     @yield('content')
-                </div>
-
             </div>
         </main>
         <footer class="py-4 bg-light mt-auto">
