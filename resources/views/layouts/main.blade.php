@@ -64,10 +64,10 @@
                     <div class="collapse" id="collapseSystem" aria-labelledby="headingOne"
                          data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="layout-static.html">Country</a>
-                            <a class="nav-link" href="layout-sidenav-light.html">State</a>
-                            <a class="nav-link" href="layout-sidenav-light.html">Department</a>
-                            <a class="nav-link" href="layout-sidenav-light.html">City</a>
+                            <a class="nav-link" href="{{route('countries.index')}}">Country</a>
+                            <a class="nav-link" href="{{route('states.index')}}">State</a>
+                            <a class="nav-link" href="{{route('departments.index')}}">Department</a>
+                            <a class="nav-link" href="{{route('cities.index')}}">City</a>
                         </nav>
                     </div>
 
