@@ -53,34 +53,36 @@
         <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
             <div class="sb-sidenav-menu">
                 <div class="nav">
-
+{{--                    {{ request()->is('*countries*') ? 'collapsed' : '' }}--}}
+{{--                    @if(request()->segment(1)==='countries')  @endif--}}
                     <div class="sb-sidenav-menu-heading">Employee Management</div>
-                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseSystem"
+                    <a class="nav-link {{ request()->routeIs('countries.*','states.*','departments.*','cities.*') ? 'collapsed' : '' }}"  href="#" data-bs-toggle="collapse" data-bs-target="#collapseSystem"
                        aria-expanded="false" aria-controls="collapseSystem">
                         <div class="sb-nav-link-icon"><i class="fas fa-cog"></i></div>
                         System Management
                         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
-                    <div class="collapse" id="collapseSystem" aria-labelledby="headingOne"
+
+                    <div class="collapse {{ request()->routeIs('countries.*','states.*','departments.*','cities.*') ? 'show' : '' }}"   id="collapseSystem" aria-labelledby="headingOne"
                          data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="{{route('countries.index')}}">Country</a>
-                            <a class="nav-link" href="{{route('states.index')}}">State</a>
-                            <a class="nav-link" href="{{route('departments.index')}}">Department</a>
-                            <a class="nav-link" href="{{route('cities.index')}}">City</a>
+                            <a class="nav-link {{ request()->routeIs('countries.*') ? 'bg-light text-dark' : '' }}" href="{{route('countries.index')}}">Country</a>
+                            <a class="nav-link {{ request()->routeIs('states.*') ? 'bg-light text-dark' : '' }}" href="{{route('states.index')}}">State</a>
+                            <a class="nav-link {{ request()->routeIs('departments.*') ? 'bg-light text-dark' : '' }}" href="{{route('departments.index')}}">Department</a>
+                            <a class="nav-link {{ request()->routeIs('cities.*') ? 'bg-light text-dark' : '' }}" href="{{route('cities.index')}}">City</a>
                         </nav>
                     </div>
 
-                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseUser"
+                    <a class="nav-link {{ request()->routeIs('users.*') ? 'collapsed' : '' }}" href="#" data-bs-toggle="collapse" data-bs-target="#collapseUser"
                        aria-expanded="false" aria-controls="collapseUser">
                         <div class="sb-nav-link-icon"><i class="fas fa-cog"></i></div>
                         User Management
                         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
-                    <div class="collapse" id="collapseUser" aria-labelledby="headingOne"
+                    <div class="collapse {{ request()->routeIs('users.*') ? 'show' : '' }}" id="collapseUser" aria-labelledby="headingOne"
                          data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="{{route('users.index')}}">User</a>
+                            <a class="nav-link {{ request()->routeIs('users.*') ? 'bg-light text-dark' : '' }}" href="{{route('users.index')}}">User</a>
                             <a class="nav-link" href="layout-sidenav-light.html">Role</a>
                             <a class="nav-link" href="layout-sidenav-light.html">Permission</a>
                         </nav>
