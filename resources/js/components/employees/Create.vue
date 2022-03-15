@@ -10,7 +10,7 @@
                     </div>
 
                     <div class="card-body">
-                        <form>
+                        <form @submit.prevent="storeEmployee">
 
                             <div class="row mb-3">
                                 <label for="first_name" class="col-md-4 col-form-label text-md-end">First Name</label>
@@ -62,7 +62,8 @@
                                 <label for="state" class="col-md-4 col-form-label text-md-end">State</label>
 
                                 <div class="col-md-6">
-                                    <select v-model="form.state_id" @change="getCities()" id="state" class="form-select form-control" aria-label="Default select">
+                                    <select v-model="form.state_id" @change="getCities()" id="state"
+                                            class="form-select form-control" aria-label="Default select">
                                         <option v-for="state in states" :key="state.id" :value="state.id">
                                             {{state.name}}
                                         </option>
@@ -74,9 +75,12 @@
                                 <label for="department" class="col-md-4 col-form-label text-md-end">Department</label>
 
                                 <div class="col-md-6">
-                                    <select v-model="form.department_id" id="department" class="form-select form-control"
+                                    <select v-model="form.department_id" id="department"
+                                            class="form-select form-control"
                                             aria-label="Default select">
-                                        <option v-for="department in departments" :key="department.id" :value="department.id">{{department.name}}</option>
+                                        <option v-for="department in departments" :key="department.id"
+                                                :value="department.id">{{department.name}}
+                                        </option>
                                     </select>
                                 </div>
                             </div>
@@ -84,8 +88,10 @@
                                 <label for="city" class="col-md-4 col-form-label text-md-end">City</label>
 
                                 <div class="col-md-6">
-                                    <select v-model="form.city_id"  id="city" class="form-select form-control" aria-label="Default select">
-                                        <option v-for="city in cities" :key="city.id" :value="city.id"> {{city.name}}</option>
+                                    <select v-model="form.city_id" id="city" class="form-select form-control"
+                                            aria-label="Default select">
+                                        <option v-for="city in cities" :key="city.id" :value="city.id"> {{city.name}}
+                                        </option>
                                     </select>
                                 </div>
                             </div>
@@ -94,21 +100,22 @@
                                 <label for="zip_code" class="col-md-4 col-form-label text-md-end">Zip Code</label>
 
                                 <div class="col-md-6">
-                                    <input id="zip_code" type="text" class="form-control" required>
+                                    <input v-model="form.zip_code" id="zip_code" type="text" class="form-control"
+                                           required>
                                 </div>
                             </div>
 
                             <div class="row mb-3">
                                 <label class="col-md-4 col-form-label text-md-end">Birth date</label>
                                 <div class="col-md-6">
-                                    <Datepicker v-model="date"></Datepicker>
+                                    <Datepicker v-model="form.birthdate"></Datepicker>
                                 </div>
                             </div>
 
                             <div class="row mb-3">
                                 <label class="col-md-4 col-form-label text-md-end">DateHired</label>
                                 <div class="col-md-6">
-                                    <Datepicker v-model="date"></Datepicker>
+                                    <Datepicker v-model="form.date_hired"></Datepicker>
                                 </div>
                             </div>
 
@@ -130,7 +137,7 @@
 </template>
 
 <script>
-    import {ref} from 'vue';
+    import moment from "moment";
     import Datepicker from 'vue3-date-time-picker';
     import 'vue3-date-time-picker/dist/main.css';
 
@@ -167,7 +174,7 @@
                     .then(res => {
                         this.countries = res.data
                     }).catch(error => {
-                    console.log(console.error)
+                    console.log(error)
                 });
             },
             getStates() {
@@ -175,7 +182,7 @@
                     .then(res => {
                         this.states = res.data
                     }).catch(error => {
-                    console.log(console.error)
+                    console.log(error)
                 });
             },
             getCities() {
@@ -183,7 +190,7 @@
                     .then(res => {
                         this.cities = res.data
                     }).catch(error => {
-                    console.log(console.error)
+                    console.log(error)
                 });
             },
             getDepartments() {
@@ -191,17 +198,37 @@
                     .then(res => {
                         this.departments = res.data
                     }).catch(error => {
-                    console.log(console.error)
+                    console.log(error)
                 });
+            },
+            storeEmployee() {
+                let data = {
+                    'first_name': this.form.first_name,
+                    'middle_name': this.form.middle_name,
+                    'last_name': this.form.last_name,
+                    'address': this.form.address,
+                    'country_id': this.form.country_id,
+                    'state_id': this.form.state_id,
+                    'city_id': this.form.city_id,
+                    'department_id': this.form.department_id,
+                    'zip_code': this.form.zip_code,
+                    'birthdate': this.format_date(this.form.birthdate),
+                    'date_hired': this.format_date(this.form.date_hired),
+                };
+                axios.post('/api/employees', data)
+                    .then(res => {
+                        console.log(res)
+                    }).catch(error => {
+                    console.log(error)
+                });
+            },
+            format_date(value) {
+                if (value) {
+                    return moment(String(value)).format('YYYYMMDD');
+                }
             }
-        },
-        setup() {
-            const date = ref();
 
-            return {
-                date
-            }
-        }
+        },
     }
 </script>
 
