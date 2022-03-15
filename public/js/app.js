@@ -22865,11 +22865,25 @@ __webpack_require__.r(__webpack_exports__);
       countries: [],
       states: [],
       departments: [],
-      cities: []
+      cities: [],
+      form: {
+        first_name: '',
+        middle_name: '',
+        last_name: '',
+        address: '',
+        country_id: '',
+        state_id: '',
+        department_id: '',
+        city_id: '',
+        zip_code: '',
+        birthdate: null,
+        date_hired: null
+      }
     };
   },
   created: function created() {
     this.getCountries();
+    this.getDepartments();
   },
   methods: {
     getCountries: function getCountries() {
@@ -22877,6 +22891,33 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.get('/api/employees/countries').then(function (res) {
         _this.countries = res.data;
+      })["catch"](function (error) {
+        console.log(console.error);
+      });
+    },
+    getStates: function getStates() {
+      var _this2 = this;
+
+      axios.get('/api/employees/' + this.form.country_id + "/states").then(function (res) {
+        _this2.states = res.data;
+      })["catch"](function (error) {
+        console.log(console.error);
+      });
+    },
+    getCities: function getCities() {
+      var _this3 = this;
+
+      axios.get('/api/employees/' + this.form.state_id + "/cities").then(function (res) {
+        _this3.cities = res.data;
+      })["catch"](function (error) {
+        console.log(console.error);
+      });
+    },
+    getDepartments: function getDepartments() {
+      var _this4 = this;
+
+      axios.get('/api/employees/departments').then(function (res) {
+        _this4.departments = res.data;
       })["catch"](function (error) {
         console.log(console.error);
       });
@@ -22990,16 +23031,56 @@ var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNod
 var _hoisted_8 = {
   "class": "card-body"
 };
+var _hoisted_9 = {
+  "class": "row mb-3"
+};
 
-var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"row mb-3\"><label for=\"first_name\" class=\"col-md-4 col-form-label text-md-end\">First Name</label><div class=\"col-md-6\"><input id=\"first_name\" type=\"text\" class=\"form-control\" required></div></div><div class=\"row mb-3\"><label for=\"middle_name\" class=\"col-md-4 col-form-label text-md-end\">Middle Name</label><div class=\"col-md-6\"><input id=\"middle_name\" type=\"text\" class=\"form-control\" required></div></div><div class=\"row mb-3\"><label for=\"last_name\" class=\"col-md-4 col-form-label text-md-end\">Last Name</label><div class=\"col-md-6\"><input id=\"last_name\" type=\"text\" class=\"form-control\" required></div></div><div class=\"row mb-3\"><label for=\"address\" class=\"col-md-4 col-form-label text-md-end\">Address</label><div class=\"col-md-6\"><input id=\"address\" type=\"text\" class=\"form-control\" required></div></div><div class=\"row mb-3\"><label for=\"country\" class=\"col-md-4 col-form-label text-md-end\">Country</label><div class=\"col-md-6\"><select id=\"country\" class=\"form-select form-control\" aria-label=\"Default select\"><option selected>select country</option></select></div></div><div class=\"row mb-3\"><label for=\"state\" class=\"col-md-4 col-form-label text-md-end\">State</label><div class=\"col-md-6\"><select id=\"state\" class=\"form-select form-control\" aria-label=\"Default select\"><option selected>select country</option></select></div></div><div class=\"row mb-3\"><label for=\"department\" class=\"col-md-4 col-form-label text-md-end\">Department</label><div class=\"col-md-6\"><select id=\"department\" class=\"form-select form-control\" aria-label=\"Default select\"><option selected>select country</option></select></div></div><div class=\"row mb-3\"><label for=\"city\" class=\"col-md-4 col-form-label text-md-end\">City</label><div class=\"col-md-6\"><select id=\"city\" class=\"form-select form-control\" aria-label=\"Default select\"><option selected>select country</option></select></div></div><div class=\"row mb-3\"><label for=\"zip_code\" class=\"col-md-4 col-form-label text-md-end\">Zip Code</label><div class=\"col-md-6\"><input id=\"zip_code\" type=\"text\" class=\"form-control\" required></div></div>", 9);
+var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "first_name",
+  "class": "col-md-4 col-form-label text-md-end"
+}, "First Name", -1
+/* HOISTED */
+);
 
+var _hoisted_11 = {
+  "class": "col-md-6"
+};
+var _hoisted_12 = {
+  "class": "row mb-3"
+};
+
+var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "middle_name",
+  "class": "col-md-4 col-form-label text-md-end"
+}, "Middle Name", -1
+/* HOISTED */
+);
+
+var _hoisted_14 = {
+  "class": "col-md-6"
+};
+var _hoisted_15 = {
+  "class": "row mb-3"
+};
+
+var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "last_name",
+  "class": "col-md-4 col-form-label text-md-end"
+}, "Last Name", -1
+/* HOISTED */
+);
+
+var _hoisted_17 = {
+  "class": "col-md-6"
+};
 var _hoisted_18 = {
   "class": "row mb-3"
 };
 
 var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "address",
   "class": "col-md-4 col-form-label text-md-end"
-}, "Birth date", -1
+}, "Address", -1
 /* HOISTED */
 );
 
@@ -23011,16 +23092,106 @@ var _hoisted_21 = {
 };
 
 var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "country",
   "class": "col-md-4 col-form-label text-md-end"
-}, "DateHired", -1
+}, "Country", -1
 /* HOISTED */
 );
 
 var _hoisted_23 = {
   "class": "col-md-6"
 };
+var _hoisted_24 = ["value"];
+var _hoisted_25 = {
+  "class": "row mb-3"
+};
 
-var _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_26 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "state",
+  "class": "col-md-4 col-form-label text-md-end"
+}, "State", -1
+/* HOISTED */
+);
+
+var _hoisted_27 = {
+  "class": "col-md-6"
+};
+var _hoisted_28 = ["value"];
+var _hoisted_29 = {
+  "class": "row mb-3"
+};
+
+var _hoisted_30 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "department",
+  "class": "col-md-4 col-form-label text-md-end"
+}, "Department", -1
+/* HOISTED */
+);
+
+var _hoisted_31 = {
+  "class": "col-md-6"
+};
+var _hoisted_32 = ["value"];
+var _hoisted_33 = {
+  "class": "row mb-3"
+};
+
+var _hoisted_34 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "city",
+  "class": "col-md-4 col-form-label text-md-end"
+}, "City", -1
+/* HOISTED */
+);
+
+var _hoisted_35 = {
+  "class": "col-md-6"
+};
+var _hoisted_36 = ["value"];
+
+var _hoisted_37 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "row mb-3"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "zip_code",
+  "class": "col-md-4 col-form-label text-md-end"
+}, "Zip Code"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "col-md-6"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  id: "zip_code",
+  type: "text",
+  "class": "form-control",
+  required: ""
+})])], -1
+/* HOISTED */
+);
+
+var _hoisted_38 = {
+  "class": "row mb-3"
+};
+
+var _hoisted_39 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-md-4 col-form-label text-md-end"
+}, "Birth date", -1
+/* HOISTED */
+);
+
+var _hoisted_40 = {
+  "class": "col-md-6"
+};
+var _hoisted_41 = {
+  "class": "row mb-3"
+};
+
+var _hoisted_42 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-md-4 col-form-label text-md-end"
+}, "DateHired", -1
+/* HOISTED */
+);
+
+var _hoisted_43 = {
+  "class": "col-md-6"
+};
+
+var _hoisted_44 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "row mb-0"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "col-md-6 offset-md-4"
@@ -23048,21 +23219,139 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     _: 1
     /* STABLE */
 
-  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", null, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [_hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Datepicker, {
-    modelValue: $setup.date,
+  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [_hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
-      return $setup.date = $event;
-    })
-  }, null, 8
-  /* PROPS */
-  , ["modelValue"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [_hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Datepicker, {
-    modelValue: $setup.date,
+      return $data.form.first_name = $event;
+    }),
+    id: "first_name",
+    type: "text",
+    "class": "form-control",
+    required: ""
+  }, null, 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.form.first_name]])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [_hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
+      return $data.form.middle_name = $event;
+    }),
+    id: "middle_name",
+    type: "text",
+    "class": "form-control",
+    required: ""
+  }, null, 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.form.middle_name]])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [_hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
+      return $data.form.last_name = $event;
+    }),
+    id: "last_name",
+    type: "text",
+    "class": "form-control",
+    required: ""
+  }, null, 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.form.last_name]])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [_hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
+      return $data.form.address = $event;
+    }),
+    id: "address",
+    type: "text",
+    "class": "form-control",
+    required: ""
+  }, null, 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.form.address]])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [_hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+    "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
+      return $data.form.country_id = $event;
+    }),
+    onChange: _cache[5] || (_cache[5] = function ($event) {
+      return $options.getStates();
+    }),
+    id: "country",
+    "class": "form-select form-control",
+    "aria-label": "Default select"
+  }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.countries, function (country) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
+      key: country.id,
+      value: country.id
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(country.name), 9
+    /* TEXT, PROPS */
+    , _hoisted_24);
+  }), 128
+  /* KEYED_FRAGMENT */
+  ))], 544
+  /* HYDRATE_EVENTS, NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.form.country_id]])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, [_hoisted_26, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_27, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+    "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
+      return $data.form.state_id = $event;
+    }),
+    onChange: _cache[7] || (_cache[7] = function ($event) {
+      return $options.getCities();
+    }),
+    id: "state",
+    "class": "form-select form-control",
+    "aria-label": "Default select"
+  }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.states, function (state) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
+      key: state.id,
+      value: state.id
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(state.name), 9
+    /* TEXT, PROPS */
+    , _hoisted_28);
+  }), 128
+  /* KEYED_FRAGMENT */
+  ))], 544
+  /* HYDRATE_EVENTS, NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.form.state_id]])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_29, [_hoisted_30, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_31, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+    "onUpdate:modelValue": _cache[8] || (_cache[8] = function ($event) {
+      return $data.form.department_id = $event;
+    }),
+    id: "department",
+    "class": "form-select form-control",
+    "aria-label": "Default select"
+  }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.departments, function (department) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
+      key: department.id,
+      value: department.id
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(department.name), 9
+    /* TEXT, PROPS */
+    , _hoisted_32);
+  }), 128
+  /* KEYED_FRAGMENT */
+  ))], 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.form.department_id]])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_33, [_hoisted_34, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_35, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+    "onUpdate:modelValue": _cache[9] || (_cache[9] = function ($event) {
+      return $data.form.city_id = $event;
+    }),
+    id: "city",
+    "class": "form-select form-control",
+    "aria-label": "Default select"
+  }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.cities, function (city) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
+      key: city.id,
+      value: city.id
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(city.name), 9
+    /* TEXT, PROPS */
+    , _hoisted_36);
+  }), 128
+  /* KEYED_FRAGMENT */
+  ))], 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.form.city_id]])])]), _hoisted_37, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_38, [_hoisted_39, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_40, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Datepicker, {
+    modelValue: $setup.date,
+    "onUpdate:modelValue": _cache[10] || (_cache[10] = function ($event) {
       return $setup.date = $event;
     })
   }, null, 8
   /* PROPS */
-  , ["modelValue"])])]), _hoisted_24])])])])])]);
+  , ["modelValue"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_41, [_hoisted_42, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_43, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Datepicker, {
+    modelValue: $setup.date,
+    "onUpdate:modelValue": _cache[11] || (_cache[11] = function ($event) {
+      return $setup.date = $event;
+    })
+  }, null, 8
+  /* PROPS */
+  , ["modelValue"])])]), _hoisted_44])])])])])]);
 }
 
 /***/ }),

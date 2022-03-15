@@ -16,28 +16,32 @@
                                 <label for="first_name" class="col-md-4 col-form-label text-md-end">First Name</label>
 
                                 <div class="col-md-6">
-                                    <input id="first_name" type="text" class="form-control" required>
+                                    <input v-model="form.first_name" id="first_name" type="text" class="form-control"
+                                           required>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label for="middle_name" class="col-md-4 col-form-label text-md-end">Middle Name</label>
 
                                 <div class="col-md-6">
-                                    <input id="middle_name" type="text" class="form-control" required>
+                                    <input v-model="form.middle_name" id="middle_name" type="text" class="form-control"
+                                           required>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label for="last_name" class="col-md-4 col-form-label text-md-end">Last Name</label>
 
                                 <div class="col-md-6">
-                                    <input id="last_name" type="text" class="form-control" required>
+                                    <input v-model="form.last_name" id="last_name" type="text" class="form-control"
+                                           required>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label for="address" class="col-md-4 col-form-label text-md-end">Address</label>
 
                                 <div class="col-md-6">
-                                    <input id="address" type="text" class="form-control" required>
+                                    <input v-model="form.address" id="address" type="text" class="form-control"
+                                           required>
                                 </div>
                             </div>
 
@@ -45,8 +49,11 @@
                                 <label for="country" class="col-md-4 col-form-label text-md-end">Country</label>
 
                                 <div class="col-md-6">
-                                    <select id="country" class="form-select form-control" aria-label="Default select">
-                                        <option selected>select country</option>
+                                    <select v-model="form.country_id" @change="getStates()" id="country"
+                                            class="form-select form-control" aria-label="Default select">
+                                        <option v-for="country in countries" :key="country.id" :value="country.id">
+                                            {{country.name}}
+                                        </option>
                                     </select>
                                 </div>
                             </div>
@@ -55,8 +62,10 @@
                                 <label for="state" class="col-md-4 col-form-label text-md-end">State</label>
 
                                 <div class="col-md-6">
-                                    <select id="state" class="form-select form-control" aria-label="Default select">
-                                        <option selected>select country</option>
+                                    <select v-model="form.state_id" @change="getCities()" id="state" class="form-select form-control" aria-label="Default select">
+                                        <option v-for="state in states" :key="state.id" :value="state.id">
+                                            {{state.name}}
+                                        </option>
                                     </select>
                                 </div>
                             </div>
@@ -65,9 +74,9 @@
                                 <label for="department" class="col-md-4 col-form-label text-md-end">Department</label>
 
                                 <div class="col-md-6">
-                                    <select id="department" class="form-select form-control"
+                                    <select v-model="form.department_id" id="department" class="form-select form-control"
                                             aria-label="Default select">
-                                        <option selected>select country</option>
+                                        <option v-for="department in departments" :key="department.id" :value="department.id">{{department.name}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -75,8 +84,8 @@
                                 <label for="city" class="col-md-4 col-form-label text-md-end">City</label>
 
                                 <div class="col-md-6">
-                                    <select id="city" class="form-select form-control" aria-label="Default select">
-                                        <option selected>select country</option>
+                                    <select v-model="form.city_id"  id="city" class="form-select form-control" aria-label="Default select">
+                                        <option v-for="city in cities" :key="city.id" :value="city.id"> {{city.name}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -133,16 +142,54 @@
                 states: [],
                 departments: [],
                 cities: [],
+                form: {
+                    first_name: '',
+                    middle_name: '',
+                    last_name: '',
+                    address: '',
+                    country_id: '',
+                    state_id: '',
+                    department_id: '',
+                    city_id: '',
+                    zip_code: '',
+                    birthdate: null,
+                    date_hired: null,
+                }
             }
         },
         created() {
             this.getCountries();
+            this.getDepartments();
         },
         methods: {
             getCountries() {
                 axios.get('/api/employees/countries')
                     .then(res => {
                         this.countries = res.data
+                    }).catch(error => {
+                    console.log(console.error)
+                });
+            },
+            getStates() {
+                axios.get('/api/employees/' + this.form.country_id + "/states")
+                    .then(res => {
+                        this.states = res.data
+                    }).catch(error => {
+                    console.log(console.error)
+                });
+            },
+            getCities() {
+                axios.get('/api/employees/' + this.form.state_id + "/cities")
+                    .then(res => {
+                        this.cities = res.data
+                    }).catch(error => {
+                    console.log(console.error)
+                });
+            },
+            getDepartments() {
+                axios.get('/api/employees/departments')
+                    .then(res => {
+                        this.departments = res.data
                     }).catch(error => {
                     console.log(console.error)
                 });
