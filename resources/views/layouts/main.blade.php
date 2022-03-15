@@ -15,7 +15,7 @@
 <body class="sb-nav-fixed">
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
     <!-- Navbar Brand-->
-    <a class="navbar-brand ps-3" href="index.html"> <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i> Dashboard</div></a>
+    <a class="navbar-brand ps-3" href="{{route('home')}}"> <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i> Dashboard</div></a>
     <!-- Sidebar Toggle-->
     <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
             class="fas fa-bars"></i></button>
@@ -55,7 +55,10 @@
                 <div class="nav">
 {{--                    {{ request()->is('*countries*') ? 'collapsed' : '' }}--}}
 {{--                    @if(request()->segment(1)==='countries')  @endif--}}
-                    <div class="sb-sidenav-menu-heading">Employee Management</div>
+                    <a class="nav-link {{ request()->is('*employees*') ? 'bg-secondary text-white' : '' }}" href="/employees">
+                        Employee Management
+                    </a>
+
                     <a class="nav-link {{ request()->routeIs('countries.*','states.*','departments.*','cities.*') ? 'collapsed' : '' }}"  href="#" data-bs-toggle="collapse" data-bs-target="#collapseSystem"
                        aria-expanded="false" aria-controls="collapseSystem">
                         <div class="sb-nav-link-icon"><i class="fas fa-cog"></i></div>
