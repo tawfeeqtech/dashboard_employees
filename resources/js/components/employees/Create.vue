@@ -49,8 +49,8 @@
                                 <label for="country" class="col-md-4 col-form-label text-md-end">Country</label>
 
                                 <div class="col-md-6">
-                                    <select v-model="form.country_id" @change="getStates()" id="country"
-                                            class="form-select form-control" aria-label="Default select">
+                                    <select v-model="form.country_id" @change="getStates()" id="country" class="form-select form-control" aria-label="Default select">
+                                        <option disabled value="selected">Select Country</option>
                                         <option v-for="country in countries" :key="country.id" :value="country.id">
                                             {{country.name}}
                                         </option>
@@ -64,6 +64,7 @@
                                 <div class="col-md-6">
                                     <select v-model="form.state_id" @change="getCities()" id="state"
                                             class="form-select form-control" aria-label="Default select">
+                                        <option disabled value="selected">Select State</option>
                                         <option v-for="state in states" :key="state.id" :value="state.id">
                                             {{state.name}}
                                         </option>
@@ -78,6 +79,7 @@
                                     <select v-model="form.department_id" id="department"
                                             class="form-select form-control"
                                             aria-label="Default select">
+                                        <option disabled value="selected">Select Department</option>
                                         <option v-for="department in departments" :key="department.id"
                                                 :value="department.id">{{department.name}}
                                         </option>
@@ -90,6 +92,7 @@
                                 <div class="col-md-6">
                                     <select v-model="form.city_id" id="city" class="form-select form-control"
                                             aria-label="Default select">
+                                        <option disabled value="selected">Select City</option>
                                         <option v-for="city in cities" :key="city.id" :value="city.id"> {{city.name}}
                                         </option>
                                     </select>
@@ -154,10 +157,10 @@
                     middle_name: '',
                     last_name: '',
                     address: '',
-                    country_id: '',
-                    state_id: '',
-                    department_id: '',
-                    city_id: '',
+                    country_id: 'selected',
+                    state_id: 'selected',
+                    department_id: 'selected',
+                    city_id: 'selected',
                     zip_code: '',
                     birthdate: null,
                     date_hired: null,
@@ -217,7 +220,7 @@
                 };
                 axios.post('/api/employees', data)
                     .then(res => {
-                        console.log(res)
+                        this.$router.push({name: 'EmployeesIndex'})
                     }).catch(error => {
                     console.log(error)
                 });

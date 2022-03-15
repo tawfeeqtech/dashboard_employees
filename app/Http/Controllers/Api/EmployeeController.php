@@ -5,28 +5,38 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\EmployeeRequest;
 use App\Http\Resources\EmployeeResource;
+use App\Http\Resources\EmployeeSingleResource;
 use App\Models\Employee;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Http\Response;
 
 class EmployeeController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return AnonymousResourceCollection
      */
-    public function index()
+    public function index(Request $request)
     {
         $employees = Employee::all();
+        if ($request->search) {
+            $employees = Employee::where('first_name', 'like', "%{$request->search}%")
+                ->orWhere('last_name', 'like', "%{$request->search}%")->get();
+        } elseif ($request->department_id && $request->department_id !== 'selected') {
+            $employees = Employee::where('department_id', 'like', "%{$request->department_id}%")
+                ->get();
+        }
         return EmployeeResource::collection($employees);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return void
      */
     public function create()
     {
@@ -49,19 +59,19 @@ class EmployeeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param Employee $employee
+     * @return EmployeeSingleResource
      */
-    public function show($id)
+    public function show(Employee $employee)
     {
-        //
+        return new EmployeeSingleResource($employee);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return void
      */
     public function edit($id)
     {
@@ -71,13 +81,13 @@ class EmployeeController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param EmployeeRequest $request
+     * @param Employee $employee
+     * @return void
      */
-    public function update(Request $request, $id)
+    public function update(EmployeeRequest $request, Employee $employee)
     {
-        //
+        $employee->update($request->validated());
     }
 
     /**
@@ -89,6 +99,6 @@ class EmployeeController extends Controller
     public function destroy(Employee $employee)
     {
         $employee->delete();
-        return response()->json('Deleted');
+        return response()->json('Employee Delete Successfully');
     }
 }

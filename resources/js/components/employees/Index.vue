@@ -12,13 +12,21 @@
                             <div class="col">
                                 <form action="" class="row align-items-center">
                                     <div class="col-sm-6">
-                                        <input type="text" name="search" class="form-control" id="autoSizingInput"
-                                               placeholder="search by name">
+                                        <input type="text" v-model.lazy="search" class="form-control"
+                                               id="autoSizingInput"
+                                               placeholder="search by name last or first">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <select v-model="selectedDepartment" @change="getDepartments()" id="country"
+                                                class="form-select form-control" aria-label="Default select">
+                                            <option disabled value="selected">Search by Department</option>
+                                            <option v-for="department in departments" :key="department.id"
+                                                    :value="department.id">
+                                                {{department.name}}
+                                            </option>
+                                        </select>
                                     </div>
 
-                                    <div class="col-auto">
-                                        <button type="submit" class="btn btn-outline-dark">Submit</button>
-                                    </div>
                                 </form>
                             </div>
                             <div class="col">
@@ -59,7 +67,6 @@
                                     <button class="btn btn-danger" @click="deleteEmployee(employee.id)">Delete</button>
                                 </td>
                             </tr>
-
                             </tbody>
                         </table>
                     </div>
@@ -75,15 +82,34 @@
             return {
                 employees: [],
                 showMessage: false,
-                message: ''
+                message: '',
+                search: null,
+                selectedDepartment: 'selected',
+                departments: [],
             }
-        }, created() {
+        },
+        created() {
             this.getEmployees();
-        }, methods: {
+            this.getDepartments();
+        },
+        methods: {
             getEmployees() {
-                axios.get('/api/employees')
+                axios.get('/api/employees', {
+                    params: {
+                        search: this.search,
+                        department_id: this.selectedDepartment
+                    }
+                })
                     .then(res => {
                         this.employees = res.data.data
+                    }).catch(error => {
+                    console.log(error)
+                });
+            },
+            getDepartments() {
+                axios.get('/api/employees/departments')
+                    .then(res => {
+                        this.departments = res.data
                     }).catch(error => {
                     console.log(error)
                 });
@@ -96,6 +122,14 @@
                 }).catch(error => {
                     console.log(error)
                 });
+            }
+        },
+        watch: {
+            search() {
+                this.getEmployees();
+            },
+            selectedDepartment() {
+                this.getEmployees();
             }
         }
     }
