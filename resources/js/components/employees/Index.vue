@@ -3,6 +3,9 @@
         <h1 class="mt-4">Employees</h1>
         <div class="row mt-4">
             <div class="col-lg-12">
+                <div v-if="showMessage" class="alert alert-success">
+                    {{message}}
+                </div>
                 <div class="card mb-4 mx-auto">
                     <div class="card-header">
                         <div class="row">
@@ -19,7 +22,8 @@
                                 </form>
                             </div>
                             <div class="col">
-                                <router-link :to="{ name: 'EmployeesCreate'}" class="btn btn-primary float-end">Create</router-link>
+                                <router-link :to="{ name: 'EmployeesCreate'}" class="btn btn-primary float-end">Create
+                                </router-link>
                             </div>
                         </div>
                     </div>
@@ -38,14 +42,21 @@
                             <tbody>
 
 
-                            <tr>
-                                <th scope="row">ii</th>
-                                <td>first_name</td>
-                                <td>last_name</td>
-                                <td>address</td>
-                                <td>department</td>
+                            <tr v-for="employee in employees" :key="employee.id">
+                                <th scope="row">{{employee.id}}</th>
+                                <td>{{employee.first_name}}</td>
+                                <td>{{employee.last_name}}</td>
+                                <td>{{employee.address}}</td>
+                                <td>{{employee.department.name}}</td>
                                 <td>
-                                    <a href="" class="btn btn-success">Edit</a>
+                                    <router-link class="btn btn-success me-2" :to="{
+                                        name:'EmployeesEdit',
+                                        params:{
+                                            id:employee.id
+                                        }
+                                    }">Edit
+                                    </router-link>
+                                    <button class="btn btn-danger" @click="deleteEmployee(employee.id)">Delete</button>
                                 </td>
                             </tr>
 
@@ -60,9 +71,32 @@
 
 <script>
     export default {
-        name: 'example-component',
-        mounted() {
-            console.log('Component mounted.')
+        data() {
+            return {
+                employees: [],
+                showMessage: false,
+                message: ''
+            }
+        }, created() {
+            this.getEmployees();
+        }, methods: {
+            getEmployees() {
+                axios.get('/api/employees')
+                    .then(res => {
+                        this.employees = res.data.data
+                    }).catch(error => {
+                    console.log(error)
+                });
+            },
+            deleteEmployee(id) {
+                axios.delete('/api/employees/' + id).then(res => {
+                    this.showMessage = true;
+                    this.message = res.data;
+                    this.getEmployees();
+                }).catch(error => {
+                    console.log(error)
+                });
+            }
         }
     }
 </script>
