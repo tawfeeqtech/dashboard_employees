@@ -9,6 +9,7 @@
                     {{session('message')}}
                 </div>
             @endif
+
             <div class="card mb-4 mx-auto">
                 <div class="card-header">
                     <div class="row">
@@ -40,34 +41,34 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @if(count($countries) <1)
+
+                        @forelse($countries as $country)
+                            <tr>
+                                <th scope="row">{{$country->id}}</th>
+                                <td>{{$country->country_code}}</td>
+                                <td>{{$country->name}}</td>
+                                <td>
+                                    <a href="{{route('countries.edit',$country->id)}}"
+                                       class="btn btn-success">Edit</a>
+
+                                    <form style="display: inline" method="POST"
+                                          action="{{route('countries.destroy',$country->id)}}">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn btn-danger">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @empty
                             <tr>
                                 <td class="text-center table-danger" colspan="4">no data</td>
                             </tr>
-                        @else
-                            @foreach($countries as $country)
-                                <tr>
-                                    <th scope="row">{{$country->id}}</th>
-                                    <td>{{$country->country_code}}</td>
-                                    <td>{{$country->name}}</td>
-                                    <td>
-                                        <a href="{{route('countries.edit',$country->id)}}"
-                                           class="btn btn-success">Edit</a>
-
-                                        <form style="display: inline" method="POST"
-                                              action="{{route('countries.destroy',$country->id)}}">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button class="btn btn-danger">Delete</button>
-                                        </form>
-
-                                        {{--                                    <a href="{{route('countries.destroy',$country->id)}}" class="btn btn-danger">Delete</a>--}}
-                                    </td>
-                                </tr>
-                            @endforeach
-                        @endif
+                        @endforelse
                         </tbody>
                     </table>
+
+                    {{ $countries->links() }}
+
                 </div>
             </div>
         </div>

@@ -21,11 +21,16 @@ class CountryController extends Controller
      */
     public function index(Request $request)
     {
-        $countries = Country::all();
+        /*$countries = Country::all();
         if ($request->has('search')){
             $countries = Country::where('name','like',"%{$request->search}%")->orWhere('country_code','like',"%{$request->search}%")->get();
-        }
-        return view('countries.index',compact('countries'));
+        }*/
+        $search = request('search');
+        $countries = Country::when($search, function ($query, $search) {
+            $query->where('country_code', 'like', "%{$search}%")->orWhere('name','like',"%{$search}%");
+        })->paginate(2)->withQueryString();
+
+        return view('countries.index', compact('countries'));
     }
 
     /**

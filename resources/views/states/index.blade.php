@@ -41,31 +41,31 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @if(count($states) <1)
+
+                        @forelse($states as $state)
+                            <tr>
+                                <th scope="row">{{$state->id}}</th>
+                                <td>{{$state->country->name}}</td>
+                                <td>{{$state->country->country_code}}</td>
+                                <td>{{$state->name}}</td>
+                                <td>
+                                    <a href="{{route('states.edit',$state->id)}}"
+                                       class="btn btn-success">Edit</a>
+
+                                    <form style="display: inline" method="POST"
+                                          action="{{route('states.destroy',$state->id)}}">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn btn-danger">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @empty
                             <tr>
                                 <td class="text-center table-danger" colspan="5">no data</td>
                             </tr>
-                        @else
-                            @foreach($states as $state)
-                                <tr>
-                                    <th scope="row">{{$state->id}}</th>
-                                    <td>{{$state->country->name}}</td>
-                                    <td>{{$state->country->country_code}}</td>
-                                    <td>{{$state->name}}</td>
-                                    <td>
-                                        <a href="{{route('states.edit',$state->id)}}"
-                                           class="btn btn-success">Edit</a>
+                        @endforelse
 
-                                        <form style="display: inline" method="POST"
-                                              action="{{route('states.destroy',$state->id)}}">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button class="btn btn-danger">Delete</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        @endif
                         </tbody>
                     </table>
                 </div>

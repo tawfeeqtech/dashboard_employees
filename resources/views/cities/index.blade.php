@@ -40,30 +40,30 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @if(count($cities) < 1)
+
+                        @forelse($cities as $city)
+                            <tr>
+                                <th scope="row">{{$city->id}}</th>
+                                <td>{{$city->state->name}}</td>
+                                <td>{{$city->name}}</td>
+                                <td>
+                                    <a href="{{route('cities.edit',$city->id)}}"
+                                       class="btn btn-success">Edit</a>
+
+                                    <form style="display: inline" method="POST"
+                                          action="{{route('cities.destroy',$city->id)}}">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn btn-danger">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @empty
                             <tr>
                                 <td class="text-center table-danger" colspan="5">no data</td>
                             </tr>
-                        @else
-                            @foreach($cities as $city)
-                                <tr>
-                                    <th scope="row">{{$city->id}}</th>
-                                    <td>{{$city->state->name}}</td>
-                                    <td>{{$city->name}}</td>
-                                    <td>
-                                        <a href="{{route('cities.edit',$city->id)}}"
-                                           class="btn btn-success">Edit</a>
+                        @endforelse
 
-                                        <form style="display: inline" method="POST"
-                                              action="{{route('cities.destroy',$city->id)}}">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button class="btn btn-danger">Delete</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        @endif
                         </tbody>
                     </table>
                 </div>

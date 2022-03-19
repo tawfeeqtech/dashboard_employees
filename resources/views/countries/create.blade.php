@@ -16,8 +16,9 @@
                         @csrf
 
                         <div class="row mb-3">
-                            <label for="country_code" class="col-md-4 col-form-label text-md-end">{{ __('Code') }}</label>
-
+                            <label for="country_code" class="col-md-4 col-form-label text-md-end">
+                                {{ __('Code') }}
+                            </label>
                             <div class="col-md-6">
                                 <input id="country_code" type="text" class="form-control @error('country_code') is-invalid @enderror" name="country_code" value="{{ old('country_code') }}" required autofocus>
 

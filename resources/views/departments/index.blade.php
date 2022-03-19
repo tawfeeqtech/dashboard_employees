@@ -39,29 +39,29 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @if(count($departments) <1)
+
+                        @forelse($departments as $department)
+                            <tr>
+                                <th scope="row">{{$department->id}}</th>
+                                <td>{{$department->name}}</td>
+                                <td>
+                                    <a href="{{route('departments.edit',$department->id)}}"
+                                       class="btn btn-success">Edit</a>
+
+                                    <form style="display: inline" method="POST"
+                                          action="{{route('departments.destroy',$department->id)}}">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn btn-danger">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @empty
                             <tr>
                                 <td class="text-center table-danger" colspan="3">no data</td>
                             </tr>
-                        @else
-                            @foreach($departments as $department)
-                                <tr>
-                                    <th scope="row">{{$department->id}}</th>
-                                    <td>{{$department->name}}</td>
-                                    <td>
-                                        <a href="{{route('departments.edit',$department->id)}}"
-                                           class="btn btn-success">Edit</a>
+                        @endforelse
 
-                                        <form style="display: inline" method="POST"
-                                              action="{{route('departments.destroy',$department->id)}}">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button class="btn btn-danger">Delete</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        @endif
                         </tbody>
                     </table>
                 </div>
